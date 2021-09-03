@@ -1,4 +1,5 @@
 from flask import Blueprint
+from flask.templating import render_template
 
 auth = Blueprint('auth', __name__)
 
@@ -15,4 +16,4 @@ def lougout():
 
 @auth.route("/register")
 def register():
-    return "<p> register</p>"
+    return render_template("register.html")
