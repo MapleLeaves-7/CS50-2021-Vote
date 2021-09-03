@@ -23,6 +23,7 @@ class Poll(db.Model):
     name = db.Column(db.String(150))
     status = db.Column(db.String(6))
     time_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    num_candidates = db.Column(db.Integer)
     candidates = db.relationship("Candidate")
 
 
@@ -39,5 +40,5 @@ class ActivePoll(db.Model):
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String, unique=True)
+    key = db.Column(db.String(150), unique=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
