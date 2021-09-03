@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Create Poll
+{% endblock %}
+
+{% block main %}
+        
+<form action="/create-poll"
+      method="post">
+    <div class="form-group">
+    <input class="form-control"
+            name="poll_name"
+            placeholder="Poll Name"
+            type="text"
+            autocomplete="off">
+    </div>
+    <div class="form-group">
+        <input class="form-control"
+               name="num_candidates"
+               placeholder="No. of Candidates"
+               type="number"
+               id="num_candidates">
+    </div>
+    <p id="feedback"></p>
+    <button class="btn btn-primary"
+            type="submit">Create Poll</button>
+</form>
+
+    
+<script>
+
+document.getElementById("num_candidates").onkeypress = function isNumberKey(evt) {
+    // Get the Unicode of the character of the key pressed into the textbox (that triggered the event)
+    // If the browser surpports event.which, use that.
+    // If not, use event.keyCode to get the Unicode
+    var char_unicode = evt.which || event.keyCode;
+
+    // If the character entered is not within 0 to 9
+    if (char_unicode > 31 && (char_unicode < 48 || char_unicode > 57)) {
+
+        document.querySelector("#feedback").innerHTML = "Please enter only positive integer numbers"
+        // Do not allow user to enter it into the textbox
+        return false;
+    }
+
+    document.querySelector("#feedback").innerHTML = ""
+    return true;
+}
+</script>
+
+{% endblock %}
