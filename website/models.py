@@ -27,11 +27,13 @@ class Poll(db.Model):
 
 
 class ClosedPoll(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
     time_closed = db.Column(db.DateTime(timezone=True), default=func.now())
 
 
 class ActivePoll(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
 
 
