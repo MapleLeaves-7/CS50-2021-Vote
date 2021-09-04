@@ -8,12 +8,13 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    polls = db.relationship("Poll")
+    # polls = db.relationship("Poll")
 
 
 class Candidate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
+    roomkey = db.Column(db.String, db.ForeignKey('poll.roomkey'))
     name = db.Column(db.String(150))
     votes = db.Column(db.Integer)
 
@@ -23,24 +24,15 @@ class Poll(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(150))
     status = db.Column(db.String(6))
+    roomkey = db.Column(db.String(18), unique=True)
     time_created = db.Column(db.DateTime(timezone=True), default=func.now())
     num_candidates = db.Column(db.Integer)
-    # current_num_votes = db.Column(db.Integer)
-    candidates = db.relationship("Candidate")
+    num_votes = db.Column(db.Integer, default=0)
+    # candidates = db.relationship("Candidate")
 
 
 class ClosedPoll(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'), unique=True)
+    winner = db.Column(db.String)
     time_closed = db.Column(db.DateTime(timezone=True), default=func.now())
-
-
-class ActivePoll(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
-
-
-class Room(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String(150), unique=True)
-    poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
