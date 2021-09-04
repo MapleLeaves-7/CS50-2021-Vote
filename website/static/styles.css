@@ -15,3 +15,8 @@ main
     /* Center contents */
     text-align: center;
 }
+
+.form-check .form-check-label
+{
+    font-size: 20px;
+}
