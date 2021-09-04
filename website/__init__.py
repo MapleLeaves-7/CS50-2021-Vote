@@ -31,7 +31,8 @@ def create_app():
 
     from .models import User
 
-    db.create_all(app)
+    with app.app_context():
+        db.create_all()
     # create_database(app)
 
     login_manager = LoginManager()
