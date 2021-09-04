@@ -48,6 +48,9 @@ def create_poll():
         elif not num_candidates:
             flash("You must indicate the number of candidates.", category="error")
             return redirect(url_for("views.create_poll"))
+        elif num_candidates > 15:
+            flash("Maximum number of candidates is 15.", category="error")
+            return redirect(url_for("views.create_poll"))
 
         # Checking if this user already has a poll of the same name
         current_poll_names = db.session.query(Poll).filter(
