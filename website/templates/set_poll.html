@@ -5,7 +5,8 @@ Set Poll
 {% endblock %}
 
 {% block main %}
-<form action="/set-poll/{{ poll_id }}"
+<p>This is your room's roomkey: {{ roomkey }}</p>
+<form action="/set-poll/{{ roomkey }}"
       method="post">
 
         {% for candidate_num in range(num_candidates) %}
@@ -13,7 +14,8 @@ Set Poll
         <input class="form-control"
         name="candidate{{ candidate_num }}"
         placeholder="Candidate {{ candidate_num + 1}}"
-        type="text">
+        type="text"
+        autocomplete="off">
         </div>
 
         {% endfor %}
