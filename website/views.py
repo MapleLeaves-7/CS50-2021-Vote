@@ -30,7 +30,10 @@ def index():
 @views.route("/homepage")
 @login_required
 def homepage():
-    return render_template("homepage.html", user=current_user)
+    active_polls = db.session.query(Poll).filter_by(
+        user_id=current_user.id, status="active").all()
+
+    return render_template("homepage.html", user=current_user, active_polls=active_polls)
 
 
 @views.route("/create-poll", methods=["GET", "POST"])
@@ -164,16 +167,6 @@ def vote(roomkey):
         return redirect(url_for("views.index"))
 
 
-@views.route("/active-polls")
-@login_required
-def active_polls():
-    # Array of polls objects the user currently has
-    polls = db.session.query(Poll).filter(
-        Poll.user_id == current_user.id).filter(Poll.status == "active").all()
-
-    return render_template("active_polls.html", user=current_user, polls=polls)
-
-
 @views.route("/closed-polls", methods=["GET", "POST"])
 @login_required
 def closed_polls():
@@ -211,6 +204,7 @@ def closed_polls():
         db.session.add(new_closed_poll)
 
         db.session.commit()
+        flash("Closed poll successfully!", category="success")
 
     closed_polls = db.session.query(Poll, ClosedPoll).filter(
         Poll.id == ClosedPoll.poll_id).filter(Poll.user_id == current_user.id).all()
