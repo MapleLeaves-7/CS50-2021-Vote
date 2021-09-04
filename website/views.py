@@ -216,3 +216,16 @@ def closed_polls():
         Poll.id == ClosedPoll.poll_id).filter(Poll.user_id == current_user.id).all()
 
     return render_template("closed_polls.html", user=current_user, closed_polls=closed_polls)
+
+
+@views.route("/current-poll/<roomkey>", methods=["GET", "POST"])
+@login_required
+def current_poll(roomkey):
+    candidates = db.session.query(Candidate).filter_by(roomkey=roomkey).all()
+
+    poll = db.session.query(Poll).filter_by(roomkey=roomkey).first()
+
+    closed_poll = db.session.query(
+        ClosedPoll).filter_by(poll_id=poll.id).first()
+
+    return render_template("current_poll.html", user=current_user, candidates=candidates, poll=poll, closed_poll=closed_poll)
