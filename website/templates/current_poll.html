@@ -15,10 +15,10 @@
                 <h5>Status: </h5>Active
             </div>
             <div class="col">
-                <h5>Time Created: </h5>{{ poll.time_created }}
+                <h5>Current Vote Count: </h5>{{ poll.num_votes }}
             </div>
             <div class="col">
-                <h5>Current Vote Count: </h5>{{ poll.num_votes }}
+                <h5>Time Created: </h5>{{ poll.time_created }}
             </div>
         </div>
     </div>
@@ -35,13 +35,18 @@
             <div class="col">
                 <h5>Time Closed: </h5>{{ closed_poll.time_closed }}
             </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
             <div class="col">
                 <h5>Winner: </h5>{{ closed_poll.winner }}
             </div>
             <div class="col">
                 <h5>Total Votes: </h5>{{ poll.num_votes }}
             </div>
-        </div>
+        </div>   
     </div>
 {% endif %}
 <p></p>
