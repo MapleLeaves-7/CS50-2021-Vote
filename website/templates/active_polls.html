@@ -10,7 +10,9 @@ Active Polls
     <thead>
         <tr>
             <th>Poll Name</th>
+            <th>Room Key</th>
             <th>Number of Candidates</th>
+            <th>Current Votes</th>
             <th>Time created</th>
             <th></th>
         </tr>
@@ -19,7 +21,9 @@ Active Polls
     {% for poll in polls %}
         <tr>
             <td>{{ poll.name }}</td>
+            <td>{{ poll.roomkey }}</td>
             <td>{{ poll.num_candidates}}</td>
+            <td>{{ poll.num_votes }}</td>
             <td>{{ poll.time_created }}</td>
             <td>
                 <form method="post" action="/closed-polls">
