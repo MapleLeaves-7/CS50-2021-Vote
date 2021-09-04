@@ -5,5 +5,19 @@ Index
 {% endblock %}
 
 {% block main %}
-<p>You have reached the homepage!! :DD</p>
+
+<form action="/"
+      method="post">
+    <p>Please enter the room key: </p>
+    <div class="form-group">
+    <input class="form-control"
+            name="roomkey"
+            placeholder="Room Key"
+            type="text"
+            autocomplete="off">
+    </div>
+    <button class="btn btn-primary"
+            type="submit">Submit</button>
+</form>
+
 {% endblock %}
