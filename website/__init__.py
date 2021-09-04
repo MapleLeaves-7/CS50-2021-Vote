@@ -3,14 +3,22 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 
+import os
+import psycopg2
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+
 db = SQLAlchemy()
-DB_NAME = "voting.db"
+# DB_NAME = "voting.db"
 
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "asdfasdfasdf asdfasdfasdf"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
+    # app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
