@@ -62,6 +62,7 @@ def set_poll(poll_id):
     num_candidates = current_poll.num_candidates
 
     if request.method == "POST":
+        # Create an array of candidates
         candidates = []
         for i in range(num_candidates):
             candidate = request.form.get(f"candidate{i}")
@@ -79,6 +80,7 @@ def set_poll(poll_id):
             flash("Candidate names must be unique.", category="error")
             return redirect(url_for("views.set_poll", poll_id=current_poll.id))
 
+        # Iternate through array of candidate names
         for candidate in candidates:
             new_candidate = Candidate(
                 poll_id=current_poll.id, name=candidate, votes=0)
@@ -90,3 +92,28 @@ def set_poll(poll_id):
 
     else:
         return render_template("set_poll.html", user=current_user, num_candidates=num_candidates, poll_id=current_poll.id)
+
+
+@views.route("/vote/<poll_id>", methods=["GET", "POST"])
+def vote(poll_id):
+    # Array of candidate objects
+    candidates = db.session.query(Candidate).filter(
+        Candidate.poll_id == poll_id).all()
+
+    if request.method == "GET":
+        return render_template("vote.html", candidates=candidates, poll_id=poll_id)
+    else:
+        # Get the value of the candidate whose checkbox was checked
+        # In this case, I set the value to be the candidate's id
+        current_candidate_id = request.form.get("candidate")
+
+        # Get the candidate object from the database
+        current_candiate = db.session.query(
+            Candidate).get(current_candidate_id)
+        print(current_candiate)
+
+        # Increment the number of votes they have by 1
+        current_candiate.votes += 1
+        db.session.commit()
+        flash("You submitted a form!", category="success")
+        return redirect(url_for("views.vote", poll_id=poll_id))
