@@ -10,6 +10,7 @@ Closed Polls
         <tr>
             <th>Poll Name</th>
             <th>Number of Candidates</th>
+            <th>Winner</th>
             <th>Time Created</th>
             <th>TIme Closed</th>
         </tr>
@@ -19,6 +20,7 @@ Closed Polls
         <tr>
             <td>{{ poll.name }}</td>
             <td>{{ poll.num_candidates}}</td>
+            <td>{{ closed_poll.winner }}</td>
             <td>{{ poll.time_created }}</td>
             <td>{{ closed_poll.time_closed }}</td>
         </tr>
