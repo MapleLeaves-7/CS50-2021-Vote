@@ -20,7 +20,7 @@ Active Polls
     <tbody>
     {% for poll in polls %}
         <tr>
-            <td>{{ poll.name }}</td>
+            <td><a href="/current-poll/{{ poll.roomkey }}">{{ poll.name }}</a></td>
             <td>{{ poll.roomkey }}</td>
             <td>{{ poll.num_candidates}}</td>
             <td>{{ poll.num_votes }}</td>

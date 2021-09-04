@@ -18,7 +18,7 @@ Closed Polls
     <tbody>
     {% for poll, closed_poll in closed_polls %}
         <tr>
-            <td>{{ poll.name }}</td>
+            <td><a href="/current-poll/{{ poll.roomkey }}">{{ poll.name }}</a></td>
             <td>{{ poll.num_candidates}}</td>
             <td>{{ closed_poll.winner }}</td>
             <td>{{ poll.time_created }}</td>
