@@ -133,7 +133,7 @@ def vote(roomkey):
     if request.method == "GET":
         # Check if there are any closed polls with this roomkey
         closed_polls = db.session.query(Poll).filter_by(
-            roomkey=roomkey).filter_by(status="closed")
+            roomkey=roomkey).filter_by(status="closed").all()
 
         # Redirect them to the index page if there are
         if closed_polls:
