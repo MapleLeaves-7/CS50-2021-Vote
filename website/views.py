@@ -115,5 +115,36 @@ def vote(poll_id):
         # Increment the number of votes they have by 1
         current_candiate.votes += 1
         db.session.commit()
-        flash("You submitted a form!", category="success")
-        return redirect(url_for("views.vote", poll_id=poll_id))
+        flash("Thank you for voting!", category="success")
+        return redirect(url_for("views.index"))
+
+
+@views.route("/active-polls")
+@login_required
+def active_polls():
+    # Array of polls objects the user currently has
+    polls = db.session.query(Poll).filter(
+        Poll.user_id == current_user.id).filter(Poll.status == "active").all()
+
+    return render_template("active_polls.html", user=current_user, polls=polls)
+
+
+@views.route("/closed-polls", methods=["GET", "POST"])
+@login_required
+def closed_polls():
+    if request.method == "POST":
+        poll_id = request.form.get("poll")
+
+        new_closed_poll = ClosedPoll(poll_id=poll_id)
+        db.session.add(new_closed_poll)
+        db.session.commit()
+
+        current_poll = db.session.query(
+            Poll).filter(Poll.id == poll_id).first()
+        current_poll.status = "closed"
+        db.session.commit()
+
+    closed_polls = db.session.query(Poll, ClosedPoll).filter(
+        Poll.id == ClosedPoll.poll_id).filter(Poll.user_id == current_user.id).all()
+
+    return render_template("closed_polls.html", user=current_user, closed_polls=closed_polls)
