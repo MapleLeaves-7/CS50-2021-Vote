@@ -5,7 +5,7 @@ Vote
 {% endblock %}
 
 {% block main %}
-<form action="/vote/{{ poll_id }}"
+<form action="/vote/{{ roomkey }}"
       method="post">
 
         {% for candidate in candidates %}
