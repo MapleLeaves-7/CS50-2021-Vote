@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ poll.name }}
+{% endblock %}
+
+{% block main %}
+<h3>Room: {{ poll.roomkey }}</h3>
+
+<hr>
+{% if poll.status == "active" %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h5>Status: </h5>Active
+            </div>
+            <div class="col">
+                <h5>Time Created: </h5>{{ poll.time_created }}
+            </div>
+            <div class="col">
+                <h5>Current Vote Count: </h5>{{ poll.num_votes }}
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h5>Status: </h5>Closed
+            </div>
+            <div class="col">
+                <h5>Time Created: </h5>{{ poll.time_created }}
+            </div>
+            <div class="col">
+                <h5>Time Closed: </h5>{{ closed_poll.time_closed }}
+            </div>
+            <div class="col">
+                <h5>Winner: </h5>{{ closed_poll.winner }}
+            </div>
+            <div class="col">
+                <h5>Total Votes: </h5>{{ poll.num_votes }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+<p></p>
+<p></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Candidate Name</th>
+            <th>Number of votes</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for candidate in candidates %}
+        <tr>
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.votes }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
