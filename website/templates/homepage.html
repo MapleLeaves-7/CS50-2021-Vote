@@ -5,5 +5,41 @@ homepage
 {% endblock %}
 
 {% block main %}
-<p>You have reached the homepage!! :DD</p>
+<h3>Welcome back!</h3>
+<hr>
+
+{% if not active_polls %}
+<p>You don't seem to have any active polls.....<a href="/create-poll">Create one</a>?</p>
+{% else %}
+<p>Here's a quick rundown of your active polls :)</p>
+{# <h5 style="text-align:left">Active Polls:</h5> #}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Poll Name</th>
+            <th>Room Key</th>
+            <th>Current Votes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for poll in active_polls %}
+        <tr>
+            <td><a href="/current-poll/{{ poll.roomkey }}">{{ poll.name }}</a></td>
+            <td>{{ poll.roomkey }}</td>
+            <td>{{ poll.num_votes }}</td>
+            <td>
+                <form method="post" action="/closed-polls">
+                <input type="hidden" name="poll" value="{{ poll.id }}"/> 
+                <button type="submit" class="btn btn-primary">Close</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>Create <a href="/create-poll">another poll</a>?</p>
+{% endif %}
+
 {% endblock %}
