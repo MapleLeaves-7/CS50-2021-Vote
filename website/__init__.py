@@ -20,7 +20,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User, Candidate, Poll, ActivePoll, ClosedPoll, Room
+    from .models import User, Candidate, Poll, ClosedPoll, Room
 
     create_database(app)
 
