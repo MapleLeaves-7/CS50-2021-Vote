@@ -1,3 +1,4 @@
+from os import P_NOWAITO
 from flask.helpers import url_for
 from website.models import Candidate
 from flask import Blueprint, render_template, request, redirect, flash
@@ -48,7 +49,7 @@ def create_poll():
         elif not num_candidates:
             flash("You must indicate the number of candidates.", category="error")
             return redirect(url_for("views.create_poll"))
-        elif num_candidates > 15:
+        elif int(num_candidates) > 15:
             flash("Maximum number of candidates is 15.", category="error")
             return redirect(url_for("views.create_poll"))
 
@@ -181,8 +182,17 @@ def closed_polls():
 
         current_poll.status = "closed"
 
+        db.session.commit()
+
         candidates = db.session.query(Candidate).filter(
             Candidate.poll_id == poll_id).all()
+
+        if not candidates:
+            new_closed_poll = ClosedPoll(poll_id=poll_id, winner="nil")
+            db.session.add(new_closed_poll)
+            db.session.commit()
+            flash("Poll closed successfully!", category="success")
+            return redirect(url_for("views.closed_polls"))
 
         # Sort the candidates in descending order of number of votes
         candidates.sort(key=lambda candidate: candidate.votes, reverse=True)
@@ -194,8 +204,6 @@ def closed_polls():
         # Then converts that into a list instead of a map object
         winning_candidate = list(map(lambda candidate: candidate.name, filter(
             lambda candidate: True if candidate.votes == max_vote else False, candidates)))
-
-        print(winning_candidate)
 
         if len(winning_candidate) > 1:
             winners = ", ".join(winning_candidate)
