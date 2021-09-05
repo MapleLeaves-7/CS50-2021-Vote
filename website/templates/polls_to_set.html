@@ -9,16 +9,16 @@ Polls to set
     <thead>
         <tr>
             <th>Poll Name</th>
-            <th>Number of Candidates Set</th>
+            <th>Number of Candidates to Set</th>
             <th>Time Created</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-    {% for poll, num_candidates_set in polls_and_candidates %}
+    {% for poll in polls_on_hold %}
         <tr>
             <td>{{ poll.name }}</td>
-            <td>{{ num_candidates_set }} / {{ poll.num_candidates}}</td>
+            <td>{{ poll.num_candidates}}</td>
             <td>{{ poll.time_created }}</td>
             <td>
                 <form method="get" action="/set-poll/{{ poll.roomkey }}">
