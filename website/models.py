@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
 class Candidate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
-    roomkey = db.Column(db.String, db.ForeignKey('poll.roomkey'))
+    roomkey = db.Column(db.String)
     name = db.Column(db.String(150))
     votes = db.Column(db.Integer)
 
