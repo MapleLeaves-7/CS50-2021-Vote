@@ -141,13 +141,13 @@ def vote(roomkey):
         Candidate.roomkey == roomkey).all()
 
     if request.method == "GET":
-        # Check if there are any closed polls with this roomkey
-        closed_polls = db.session.query(Poll).filter_by(
-            roomkey=roomkey).filter_by(status="closed").all()
+        # Check if this room is active
+        poll = db.session.query(Poll).filter_by(
+            roomkey=roomkey).filter_by(status="active").all()
 
-        # Redirect them to the index page if there are
-        if closed_polls:
-            flash("This poll has already been closed", category="error")
+        # Redirect them to the index page if poll has not been activated
+        if not poll:
+            flash("This poll is not active.", category="error")
             return redirect(url_for("views.index"))
 
         return render_template("vote.html", candidates=candidates, roomkey=roomkey)
@@ -231,20 +231,11 @@ def closed_polls():
 @views.route("/polls-to-set", methods=["GET", "POST"])
 @login_required
 def polls_to_set():
-    polls_and_candidates = []
     polls_on_hold = db.session.query(
         Poll).filter(Poll.user_id == current_user.id).filter(Poll.status == "onhold").all()
 
-    for poll in polls_on_hold:
-        candidates = db.session.query(Candidate).filter(
-            Poll.id == Candidate.poll_id).all()
-        if not candidates:
-            polls_and_candidates.append((poll, 0))
-        else:
-            polls_and_candidates.append((poll, len(candidates)))
-
     print(polls_on_hold)
-    return render_template("polls_to_set.html", user=current_user, polls_and_candidates=polls_and_candidates)
+    return render_template("polls_to_set.html", user=current_user, polls_on_hold=polls_on_hold)
 
 
 @views.route("/current-poll/<roomkey>", methods=["GET", "POST"])
