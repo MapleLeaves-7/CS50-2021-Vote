@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Polls to set
+{% endblock %}
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Poll Name</th>
+            <th>Number of Candidates Set</th>
+            <th>Time Created</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for poll, num_candidates_set in polls_and_candidates %}
+        <tr>
+            <td>{{ poll.name }}</td>
+            <td>{{ num_candidates_set }} / {{ poll.num_candidates}}</td>
+            <td>{{ poll.time_created }}</td>
+            <td>
+                <form method="get" action="/set-poll/{{ poll.roomkey }}">
+                <input type="hidden" name="poll" value="{{ poll.id }}"/> 
+                <button type="submit" class="btn btn-primary">Set Candidates</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}
