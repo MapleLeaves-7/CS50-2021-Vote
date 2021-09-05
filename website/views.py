@@ -156,6 +156,11 @@ def vote(roomkey):
         # In this case, I set the value to be the candidate's id
         current_candidate_id = request.form.get("candidate")
 
+        # Ensure that user has picked a candidate before submitting form
+        if current_candidate_id == None:
+            flash("You must pick a candidate to vote for!", category="error")
+            return redirect(url_for("views.vote", roomkey=roomkey))
+
         # Get the candidate object from the database
         current_candiate = db.session.query(
             Candidate).get(current_candidate_id)
