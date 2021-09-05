@@ -75,7 +75,7 @@ def create_poll():
 
         # If not, add this poll to the database
         new_poll = Poll(user_id=current_user.id,
-                        name=poll_name, roomkey=roomkey, status="active", num_candidates=num_candidates)
+                        name=poll_name, roomkey=roomkey, status="onhold", num_candidates=num_candidates)
 
         db.session.add(new_poll)
         db.session.commit()
@@ -122,7 +122,10 @@ def set_poll(roomkey):
             new_candidate = Candidate(
                 poll_id=current_poll.id, name=candidate, roomkey=roomkey, votes=0)
             db.session.add(new_candidate)
-            db.session.commit()
+
+        current_poll.status = "active"
+
+        db.session.commit()
 
         flash("Poll created!", category="success")
         return redirect(url_for("views.homepage"))
@@ -187,6 +190,8 @@ def closed_polls():
         candidates = db.session.query(Candidate).filter(
             Candidate.poll_id == poll_id).all()
 
+        # If there were no candidates created for that poll,
+        # Set the winner as nil and close the pol
         if not candidates:
             new_closed_poll = ClosedPoll(poll_id=poll_id, winner="nil")
             db.session.add(new_closed_poll)
@@ -221,6 +226,25 @@ def closed_polls():
         Poll.id == ClosedPoll.poll_id).filter(Poll.user_id == current_user.id).all()
 
     return render_template("closed_polls.html", user=current_user, closed_polls=closed_polls)
+
+
+@views.route("/polls-to-set", methods=["GET", "POST"])
+@login_required
+def polls_to_set():
+    polls_and_candidates = []
+    polls_on_hold = db.session.query(
+        Poll).filter(Poll.user_id == current_user.id).filter(Poll.status == "onhold").all()
+
+    for poll in polls_on_hold:
+        candidates = db.session.query(Candidate).filter(
+            Poll.id == Candidate.poll_id).all()
+        if not candidates:
+            polls_and_candidates.append((poll, 0))
+        else:
+            polls_and_candidates.append((poll, len(candidates)))
+
+    print(polls_on_hold)
+    return render_template("polls_to_set.html", user=current_user, polls_and_candidates=polls_and_candidates)
 
 
 @views.route("/current-poll/<roomkey>", methods=["GET", "POST"])
