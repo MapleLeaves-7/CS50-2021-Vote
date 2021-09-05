@@ -243,7 +243,13 @@ def polls_to_set():
 def current_poll(roomkey):
     candidates = db.session.query(Candidate).filter_by(roomkey=roomkey).all()
 
-    poll = db.session.query(Poll).filter_by(roomkey=roomkey).first()
+    poll = db.session.query(Poll).filter_by(
+        roomkey=roomkey, user_id=current_user.id).first()
+
+    # Ensure that user can only access information about polls that they created
+    if not poll:
+        flash("You do not own a poll with this roomkey.", category="error")
+        return redirect(url_for("views.homepage"))
 
     closed_poll = db.session.query(
         ClosedPoll).filter_by(poll_id=poll.id).first()
