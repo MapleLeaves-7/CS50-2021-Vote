@@ -9,10 +9,9 @@ homepage
 <hr>
 
 {% if not active_polls %}
-<p>You don't seem to have any active polls.....<a href="/create-poll">Create one</a>?</p>
+<p class="homepage">You don't seem to have any active polls.....<a href="/create-poll">Create one</a>?</p>
 {% else %}
-<p>Here's a quick rundown of your active polls :)</p>
-{# <h5 style="text-align:left">Active Polls:</h5> #}
+<p class="homepage">Here's a quick rundown of your active polls :)</p>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -29,7 +28,7 @@ homepage
             <td>{{ poll.roomkey }}</td>
             <td>{{ poll.num_votes }}</td>
             <td>
-                <form method="post" action="/closed-polls">
+                <form method="get" action="/closed-polls">
                 <input type="hidden" name="poll" value="{{ poll.id }}"/> 
                 <button type="submit" class="btn btn-primary">Close</button>
                 </form>
@@ -39,7 +38,7 @@ homepage
     </tbody>
 </table>
 
-<p>Create <a href="/create-poll">another poll</a>?</p>
+<p class="homepage">Create <a href="/create-poll">another poll</a>?</p>
 {% endif %}
 
 {% endblock %}
