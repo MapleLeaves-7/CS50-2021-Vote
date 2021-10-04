@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block main %}
-<h3>Room: {{ poll.roomkey }}</h3>
+<h3>Poll: {{ poll.name }} </h3>
+<h3>Key: {{ poll.roomkey }}</h3>
 
 <hr>
 {% if poll.status == "active" %}
