@@ -2,7 +2,7 @@
 #### Video Demo:  <URL HERE>
 #### Description:
 
-This is a website that allows users to create polls, vote on them, as well as keep a record of past polls they have created. 
+This is my CS50x 2021 Final Project. It is a website that allows users to create polls, vote on them, as well as keep a record of past polls they have created. 
 
 Users have to register for an account to create polls, and set all the candidates of the poll to activate it. Once a poll has been activated, the user will be given a unique room key for that particular poll. Room keys are randomly generated, and contain numbers and letters. Each room key is 12 characters long. Anyone can use a room key to vote on a poll. They can do this by going to the website and entering the room key into the box provided on the frontpage. Since voting is anonymous, users do not have to log in to vote on polls. The creator of the poll can monitor each poll's progress by logging into their account, and their homepage should show a summary of all the active polls a user has. To view the details of a particular poll, users can click on the poll name, and they will be redirected to a page that shows them the current vote count, the time the poll was created, as well as the number of votes each candidate currently has. From the homepage, users can also close any active polls by clicking "close". This is non-reversible and once a poll has been closed, it can no longer be opened again. Once this is done, the room key can no longer be used, and users who try to enter this room key at the front page of the website would informed of the poll’s closure.
 
