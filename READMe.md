@@ -15,6 +15,7 @@ Video Demo: https://www.youtube.com/watch?v=4ShpKT9As2w
 4)	Share the room key with relevant parties
 
 **Voting on a poll:**
+
 The room key can be used by anyone to vote on a poll.
 
 1)	Enter the room key into the front page of the website
