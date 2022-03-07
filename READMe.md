@@ -45,7 +45,7 @@ Hence, the challenges I faced were:
 5)	Designing the schema for databases for efficient data storage
 6)	Designing user-friendly website layout
 
-### Accomplishments I’m proud of
+## Accomplishments I’m proud of
 I learnt SQLAlchemy and Flask-login from reading the documentation and managed to integrate both technologies successfully into the website. I also learnt Heroku specifically to deploy this website. 
 
 By continuously testing my website and trying to use it in a way that it was not intended for, I managed to think of multiple edge cases, and was thus able to modify my code to account for them. For example, in an older version, users clicking away before setting all the candidates would lead to the poll being lost forever, and any user with an account typing the room key directly into the URL would be able to see the results of the poll regardless of whether they created that specific poll or not. 
