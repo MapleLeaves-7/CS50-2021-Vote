@@ -8,20 +8,20 @@ This is a website that facilitates easy anonymous voting, while also allowing us
 ### How to use it
 #### Video Demo: https://www.youtube.com/watch?v=4ShpKT9As2w 
 
-** Creating a poll: ** 
+**Creating a poll:** 
 1)	Register for an account
 2)	Set all the candidates for the poll
 3)	Get the room key
 4)	Share the room key with relevant parties
 
-** Voting on a poll: **
+**Voting on a poll:**
 The room key can be used by anyone to vote on a poll.
 
 1)	Enter the room key into the front page of the website
 2)	Click on choice
 3)	Submit
 
-** Closing a poll: **
+**Closing a poll:**
 
 1)	Log into account
 2)	Click on the “close” button beside the active poll you want to close
