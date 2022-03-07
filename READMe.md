@@ -1,15 +1,54 @@
 # Voting
-#### Video Demo: https://www.youtube.com/watch?v=4ShpKT9As2w
-#### Description:
 
-This is my CS50x 2021 Final Project. It is a website that allows users to create polls, vote on them, as well as keep a record of past polls they have created. 
+This is my CS50x 2021 Final Project.
 
-Users have to register for an account to create polls, and set all the candidates of the poll to activate it. Once a poll has been activated, the user will be given a unique room key for that particular poll. Room keys are randomly generated, and contain numbers and letters. Each room key is 12 characters long. Anyone can use a room key to vote on a poll. They can do this by going to the website and entering the room key into the box provided on the frontpage. Since voting is anonymous, users do not have to log in to vote on polls. The creator of the poll can monitor each poll's progress by logging into their account, and their homepage should show a summary of all the active polls a user has. To view the details of a particular poll, users can click on the poll name, and they will be redirected to a page that shows them the current vote count, the time the poll was created, as well as the number of votes each candidate currently has. From the homepage, users can also close any active polls by clicking "close". This is non-reversible and once a poll has been closed, it can no longer be opened again. Once this is done, the room key can no longer be used, and users who try to enter this room key at the front page of the website would informed of the poll’s closure.
+### What it does
+This is a website that facilitates easy anonymous voting, while also allowing users to keep a record of all past poll results. 
 
-Each poll is allowed a maximum of 15 candidates. I had to set a limit on the number of candidates each user could set so that would not enter an arbitrarily big number and crash the entire system. I put 15 as I thought it was neither too big nor too small. 
+### How to use it
+#### Video Demo: https://www.youtube.com/watch?v=4ShpKT9As2w 
 
-All of the logic for the website lies inside the folder called "website". Outside, the main.py file is used to execute the program. It refers to a function called create_app() in the __init__.py file in the website folder. The create_app() function configures all the settings for the application. Inside the website folder, the auth.py file handles all logic for user authentication including registering for an account, logging into an account as well as logging out. The view.py file handles all the logic for the functionality of the rest of the website. The models.py file is a template for the SQL database, with each class representing a table. 
+** Creating a poll: ** 
+1)	Register for an account
+2)	Set all the candidates for the poll
+3)	Get the room key
+4)	Share the room key with relevant parties
 
-The “templates” folder holds all the templates for the website. The layout template was copied from CS50’s Problem Set 9, Finance. Minor modifications were made, including adding logic to show flashed messages at the top to indicate when certain actions made by the user were successful or unsuccessful. The “static” folder holds only the styles.css file. This file was also copied from CS50’s Problem Set 9, but was modified to include different font sizes for different classes. 
+** Voting on a poll: **
+The room key can be used by anyone to vote on a poll.
 
-Outside the “website” folder, there is a Procfile which is needed for deployment to Heroku. The requirements.txt file is to specify to Heroku the packages required for this website to function, as well as their versions. The runtime.txt file specifies the specific python version needed.
+1)	Enter the room key into the front page of the website
+2)	Click on choice
+3)	Submit
+
+** Closing a poll: **
+
+1)	Log into account
+2)	Click on the “close” button beside the active poll you want to close
+
+Note: Once a poll is closed, it can no longer be opened again.
+
+### How I built it
+Python, Flask and SQLAlchemy was used for the backend, and Javascript, HTML and CSS was used for the frontend. Heroku was used to deploy the website. 
+
+### Challenges I ran into
+When building a website for CS50’s problem set, the helper library had automated a significant portion of the backend, including integration with sqlite3 as well as authenticating logins. 
+
+Problem sets were also done in the CS50 IDE, with all the required libraries already pre-installed.
+
+Hence, the challenges I faced were:
+1)  Setting up the correct environment in my local computer with all the relevant libraries and dependencies
+2)	Figuring out how to authenticate logins
+3)	Figuring out how to integrate SQL with python and flask
+4)	Figuring out how to deploy a website onto the internet
+5)	Designing the schema for databases for efficient data storage
+6)	Designing user-friendly website layout
+
+### Accomplishments I’m proud of
+I learnt SQLAlchemy and Flask-login from reading the documentation and managed to integrate both technologies successfully into the website. I also learnt Heroku specifically to deploy this website. 
+
+By continuously testing my website and trying to use it in a way that it was not intended for, I managed to think of multiple edge cases, and was thus able to modify my code to account for them. For example, in an older version, users clicking away before setting all the candidates would lead to the poll being lost forever, and any user with an account typing the room key directly into the URL would be able to see the results of the poll regardless of whether they created that specific poll or not. 
+
+### What I’ve learnt
+Minimum viable product.
+Initially, I came up with an idea that was too complex and was at a loss at how to begin. I only began to make progress once I aimed to create a minimum viable product, and then broke the project down into smaller pieces to be worked on separately, implementing one feature at a time. 
